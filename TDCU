@@ -1,0 +1,18 @@
+# -*- coding: utf-8 -*-
+"""
+@author: duncan
+"""
+import serial
+
+
+class TDCU():
+    def __init__(self, portname):
+        self.serialport = serial.serial_for_url(portname, do_not_open=True)
+        self.serialport.close()  # In case port is already open
+        self.serialport.open()
+        self.serialport.write("++addr 9\n".encode())
+        self.successread = 0
+        self.failread = 0
+        
+    def clockamplitude(self, clkamp):
+        self.serialport.write("CAP " + format(clkamp)\n".encode()) # Set clock amplitude 0.25 to 2V
